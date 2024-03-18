@@ -93,7 +93,6 @@ export class Mangaworld implements SearchResultsProviding, MangaProviding, Chapt
     async getMangaDetails(mangaId: string): Promise<SourceManga> {
         const $ = await this.DOMHTML(`${DOMAIN}/manga/${mangaId}`);
         let mangaDetails = this.parser.parseMangaDetails($, mangaId);
-        this.manga_name = mangaDetails.mangaInfo.titles[0]
         return mangaDetails
     }
 

@@ -10,8 +10,10 @@ const entities = require('entities');
 
 export class Parser {
     parseMangaDetails($: CheerioStatic, mangaId: string): SourceManga {
+        const titles: string[] = []
+
         const title = $(".name.bigger").text().trim();
-        console.log(title);
+        titles.push(title)
         const image = $("img.rounded").attr("src") || "";
         const author = $('span.font-weight-bold:contains("Autore: ")').next().text()
         const artist = $('span.font-weight-bold:contains("Artista: ")').next().text()
@@ -19,9 +21,9 @@ export class Parser {
         const status = $('span.font-weight-bold:contains("Stato: ")').first().next().text().trim().toLowerCase().replace(/\s/g, "");
         const tags: Tag[] = []
         return App.createSourceManga({
-            id: `${title}/${mangaId}`,
+            id: mangaId,
             mangaInfo: App.createMangaInfo({
-                titles: title,
+                titles: titles,
                 author,
                 artist,
                 image,
