@@ -32,7 +32,7 @@ export const isLastPage = ($: CheerioStatic): boolean => {
 console.log('Run')
 
 export const MangaworldInfo: SourceInfo = {
-    version: '1.0.0',
+    version: '1.0.1',
     name: 'Mangaworld',
     icon: 'icon.png',
     author: 'Fonta',

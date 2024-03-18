@@ -10,64 +10,14 @@ const entities = require('entities');
 
 export class Parser {
     parseMangaDetails($: CheerioStatic, mangaId: string): SourceManga {
-        /* const tags: Tag[] = [];
-
-        let author = '';
-        let artist = '';
-
-        $('p', '.descripton').each((_: any, obj: any) => {
-            switch ($(obj).clone().children().remove().end().text().trim()) {
-                case 'Tác giả:':
-                    author = this.decodeHTMLEntity($('a', obj).text().trim());
-                    artist = this.decodeHTMLEntity($('a', obj).text().trim());
-                    break;
-                case 'Thể loại:':
-                    $('.category > a', obj).each((_: any, genres: any) => {
-                        const genre = $(genres).text().trim();
-                        const id = $(genres).attr('href') ?? genre;
-                        tags.push(App.createTag({ label: genre, id }));
-                    });
-            }
-        })
-
-        const title = [this.decodeHTMLEntity($('.entry-title > a').text().trim())]
-        const desc = $('.content').text();
-        const image = encodeURI(String($('.thumbnail > img').attr('src'))) ?? "https://i.imgur.com/GYUxEX8.png";
-        const status = this.decodeHTMLEntity($('.description > p > .color-red:last-child').text().trim());
-
-        return App.createSourceManga({
-            id: mangaId,
-            mangaInfo: App.createMangaInfo({
-                titles: title,
-                author,
-                artist,
-                image,
-                covers: [image],
-                desc,
-                status,
-                tags: [App.createTagSection({ id: '0', label: 'genres', tags: tags })]
-            })
-        }) */
         const title = $(".name.bigger").text().trim();
         console.log(title);
         const image = $("img.rounded").attr("src") || "";
         const author = $('span.font-weight-bold:contains("Autore: ")').next().text()
         const artist = $('span.font-weight-bold:contains("Artista: ")').next().text()
         const desc = $("div#noidungm").text().trim();
-        // const status = getStatus($);
-        // const lastUpdate = parseLastUpdate($);
-
-        // const info = {
-        //     id: mangaId,
-        //     titles: [title],
-        //     image,
-        //     author,
-        //     desc,
-        //     status,
-        //     lastUpdate,
-        //     langFlag: "it",
-        // };
-
+        const status = $('span.font-weight-bold:contains("Stato: ")').first().next().text().trim().toLowerCase().replace(/\s/g, "");
+        const tags: Tag[] = []
         return App.createSourceManga({
             id: `${title}/${mangaId}`,
             mangaInfo: App.createMangaInfo({
