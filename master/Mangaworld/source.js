@@ -1500,7 +1500,6 @@ class Mangaworld {
     async getMangaDetails(mangaId) {
         const $ = await this.DOMHTML(`${DOMAIN}/manga/${mangaId}`);
         let mangaDetails = this.parser.parseMangaDetails($, mangaId);
-        this.manga_name = mangaDetails.mangaInfo.titles[0];
         return mangaDetails;
     }
     async getChapters(mangaId) {
@@ -1591,8 +1590,9 @@ class Parser {
         };
     }
     parseMangaDetails($, mangaId) {
+        const titles = [];
         const title = $(".name.bigger").text().trim();
-        console.log(title);
+        titles.push(title);
         const image = $("img.rounded").attr("src") || "";
         const author = $('span.font-weight-bold:contains("Autore: ")').next().text();
         const artist = $('span.font-weight-bold:contains("Artista: ")').next().text();
@@ -1600,9 +1600,9 @@ class Parser {
         const status = $('span.font-weight-bold:contains("Stato: ")').first().next().text().trim().toLowerCase().replace(/\s/g, "");
         const tags = [];
         return App.createSourceManga({
-            id: `${title}/${mangaId}`,
+            id: mangaId,
             mangaInfo: App.createMangaInfo({
-                titles: title,
+                titles: titles,
                 author,
                 artist,
                 image,
